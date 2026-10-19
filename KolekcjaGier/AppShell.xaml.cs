@@ -5,6 +5,9 @@
         public AppShell()
         {
             InitializeComponent();
+
+            // Rejestracja trasy dla strony szczegółów
+            Routing.RegisterRoute(nameof(SzczegolyPage), typeof(SzczegolyPage));
         }
     }
 }
