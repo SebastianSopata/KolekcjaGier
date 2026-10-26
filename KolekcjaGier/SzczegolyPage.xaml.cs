@@ -1,12 +1,11 @@
+using KolekcjaGier.Models;
+
 namespace KolekcjaGier
 {
-    [QueryProperty(nameof(GraId), "id")]
+    [QueryProperty(nameof(Gra), "WybranaGra")]
     public partial class SzczegolyPage : ContentPage
     {
-        public string GraId
-        {
-            set => NumerWyswietlacz.Text = $"Wybrano grê o numerze ID: {value}";
-        }
+        public Gra Gra { set => BindingContext = value; }
 
         public SzczegolyPage()
         {

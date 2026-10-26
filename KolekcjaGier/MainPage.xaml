@@ -1,100 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:KolekcjaGier"
+             xmlns:models="clr-namespace:KolekcjaGier.Models"
              x:Class="KolekcjaGier.MainPage"
+             x:DataType="local:MainPage"
              BackgroundColor="{StaticResource TloAplikacji}">
 
-    <!-- Grid z trzema wierszami: Auto (nagłówek), * (środek), Auto (przyciski) -->
     <Grid RowDefinitions="Auto,*,Auto" Padding="20">
 
-        <!-- WIERSZ 0: Nagłówek -->
+        <!-- Nagłówek -->
         <VerticalStackLayout Grid.Row="0" Spacing="4" Margin="0,0,0,16">
-            <Label Text="KOLEKCJA GIER" 
-                   FontSize="26" 
-                   FontAttributes="Bold" 
-                   TextColor="White" />
-            <Label Text="Katalog okładek i wydań pudełkowych" 
-                   FontSize="14" 
-                   TextColor="#94A3B8" />
+            <Label Text="KOLEKCJA GIER" FontSize="26" FontAttributes="Bold" TextColor="White" />
+            <Label Text="Katalog okładek i wydań pudełkowych" FontSize="14" TextColor="#94A3B8" />
         </VerticalStackLayout>
 
-        <!-- WIERSZ 1: Karty gier (przewijane) -->
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout>
+        <!-- Lista (CollectionView) -->
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding Gry}"
+                        SelectionMode="Single"
+                        SelectionChanged="OnGraWybrana"
+                        EmptyView="Półka jest pusta. Dodaj pierwszą grę!">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Gra">
+                    <!-- Szablon karty powielany dla każdej gry -->
+                    <Border Style="{StaticResource KartaGry}">
+                        <VerticalStackLayout Spacing="12">
+                            <Image Source="{Binding Zdjecie}" HeightRequest="180" Aspect="AspectFit" />
+                            <Label Text="{Binding Tytul}" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalTextAlignment="Center" />
+                            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="8" ColumnSpacing="10">
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Platforma, StringFormat='Platforma: {0}'}" TextColor="#C4B5FD" FontAttributes="Bold" />
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding RokWydania, StringFormat='Rok wydania: {0}'}" TextColor="#E2E8F0" HorizontalTextAlignment="End" />
+                                <Label Grid.Row="1" Grid.Column="0" Text="{Binding WersjaPudelkowa, StringFormat='Fizyczna: {0}'}" TextColor="#34D399" />
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Ocena, StringFormat='Ocena: {0}/10'}" TextColor="#FBBF24" FontAttributes="Bold" HorizontalTextAlignment="End" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
-                <!-- KARTA GRY NR 1: Wiedźmin 3 (przekazuje id=1) -->
-                <Border Style="{StaticResource KartaGry}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnRzeczTapped" CommandParameter="1" />
-                    </Border.GestureRecognizers>
-
-                    <VerticalStackLayout Spacing="12">
-                        <Image Source="wiedzmin3.jpg" 
-                               HeightRequest="180" 
-                               Aspect="AspectFit" />
-
-                        <Label Text="Wiedźmin 3: Dziki Gon" 
-                               FontSize="20" 
-                               FontAttributes="Bold" 
-                               TextColor="White" 
-                               HorizontalTextAlignment="Center" />
-
-                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="8" ColumnSpacing="10">
-                            <Label Grid.Row="0" Grid.Column="0" Text="Platforma: PS4" TextColor="#C4B5FD" FontAttributes="Bold" />
-                            <Label Grid.Row="0" Grid.Column="1" Text="Rok wydania: 2015" TextColor="#E2E8F0" HorizontalTextAlignment="End" />
-                            <Label Grid.Row="1" Grid.Column="0" Text="Nośnik: Płyta Blu-ray + Box" TextColor="#34D399" />
-                            <Label Grid.Row="1" Grid.Column="1" Text="Ocena: 10/10" TextColor="#FBBF24" FontAttributes="Bold" HorizontalTextAlignment="End" />
-                        </Grid>
-                    </VerticalStackLayout>
-                </Border>
-
-                <!-- KARTA GRY NR 2: Minecraft (przekazuje id=2) -->
-                <Border Style="{StaticResource KartaGry}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnRzeczTapped" CommandParameter="2" />
-                    </Border.GestureRecognizers>
-
-                    <VerticalStackLayout Spacing="12">
-                        <!-- Jeśli nie masz pliku minecraft.jpg w Resources/Images, wpisz tu np. dotnet_bot.png -->
-                        <Image Source="minecraft.jpg" 
-                               HeightRequest="180" 
-                               Aspect="AspectFit" />
-
-                        <Label Text="Minecraft" 
-                               FontSize="20" 
-                               FontAttributes="Bold" 
-                               TextColor="White" 
-                               HorizontalTextAlignment="Center" />
-
-                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="8" ColumnSpacing="10">
-                            <Label Grid.Row="0" Grid.Column="0" Text="Platforma: PC" TextColor="#C4B5FD" FontAttributes="Bold" />
-                            <Label Grid.Row="0" Grid.Column="1" Text="Rok wydania: 2011" TextColor="#E2E8F0" HorizontalTextAlignment="End" />
-                            <Label Grid.Row="1" Grid.Column="0" Text="Nośnik: Klucz cyfrowy / Box" TextColor="#34D399" />
-                            <Label Grid.Row="1" Grid.Column="1" Text="Ocena: 9/10" TextColor="#FBBF24" FontAttributes="Bold" HorizontalTextAlignment="End" />
-                        </Grid>
-                    </VerticalStackLayout>
-                </Border>
-
-                <!-- Podsumowanie półki -->
-                <Border Style="{StaticResource KartaGry}">
-                    <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
-                        <Label Text="Stan kolekcji:" TextColor="#94A3B8" VerticalOptions="Center" />
-                        <Label Text="2 gry na półce (PS4, PC)" TextColor="White" FontAttributes="Bold" VerticalOptions="Center" />
-                    </HorizontalStackLayout>
-                </Border>
-
-            </VerticalStackLayout>
-        </ScrollView>
-
-        <!-- WIERSZ 2: Przyciski na dole -->
-        <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,12,0,0">
-            <Button Grid.Column="0" 
-                    Text="Dodaj grę / zdjęcie" 
-                    Clicked="OnButtonClicked" />
-            <Button Grid.Column="1" 
-                    Text="Filtruj półkę" 
-                    Clicked="OnButtonClicked" />
-        </Grid>
+        <!-- Przycisk na dole -->
+        <Button Grid.Row="2" Margin="0,12,0,0" Text="Dodaj nową grę" Clicked="OnDodajClicked" TextColor="White" />
 
     </Grid>
 </ContentPage>
