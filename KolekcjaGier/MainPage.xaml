@@ -1,36 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:KolekcjaGier"
+             xmlns:vm="clr-namespace:KolekcjaGier.ViewModels"
              xmlns:models="clr-namespace:KolekcjaGier.Models"
              x:Class="KolekcjaGier.MainPage"
-             x:DataType="local:MainPage"
+             x:DataType="vm:GryViewModel"
              BackgroundColor="{StaticResource TloAplikacji}">
 
     <Grid RowDefinitions="Auto,*,Auto" Padding="20">
 
-        <!-- Nagłówek -->
+        <!-- Nagłówek z licznikiem spiętym z [ObservableProperty] -->
         <VerticalStackLayout Grid.Row="0" Spacing="4" Margin="0,0,0,16">
             <Label Text="KOLEKCJA GIER" FontSize="26" FontAttributes="Bold" TextColor="White" />
-            <Label Text="Katalog okładek i wydań pudełkowych" FontSize="14" TextColor="#94A3B8" />
+            <Label Text="{Binding LiczbaGier, StringFormat='Na półce: {0}'}" FontSize="14" TextColor="#34D399" FontAttributes="Bold" />
         </VerticalStackLayout>
 
-        <!-- Lista (CollectionView) -->
+        <!-- Lista gier (CollectionView) z komendą przypisaną przez RelativeSource -->
         <CollectionView Grid.Row="1" 
                         ItemsSource="{Binding Gry}"
-                        SelectionMode="Single"
-                        SelectionChanged="OnGraWybrana"
                         EmptyView="Półka jest pusta. Dodaj pierwszą grę!">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Gra">
-                    <!-- Szablon karty powielany dla każdej gry -->
                     <Border Style="{StaticResource KartaGry}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GryViewModel}}, Path=PokazSzczegolyCommand}"
+                                CommandParameter="{Binding .}" />
+                        </Border.GestureRecognizers>
+
                         <VerticalStackLayout Spacing="12">
                             <Image Source="{Binding Zdjecie}" HeightRequest="180" Aspect="AspectFit" />
                             <Label Text="{Binding Tytul}" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalTextAlignment="Center" />
                             <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="8" ColumnSpacing="10">
                                 <Label Grid.Row="0" Grid.Column="0" Text="{Binding Platforma, StringFormat='Platforma: {0}'}" TextColor="#C4B5FD" FontAttributes="Bold" />
-                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding RokWydania, StringFormat='Rok wydania: {0}'}" TextColor="#E2E8F0" HorizontalTextAlignment="End" />
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding RokWydania, StringFormat='Rok: {0}'}" TextColor="#E2E8F0" HorizontalTextAlignment="End" />
                                 <Label Grid.Row="1" Grid.Column="0" Text="{Binding WersjaPudelkowa, StringFormat='Fizyczna: {0}'}" TextColor="#34D399" />
                                 <Label Grid.Row="1" Grid.Column="1" Text="{Binding Ocena, StringFormat='Ocena: {0}/10'}" TextColor="#FBBF24" FontAttributes="Bold" HorizontalTextAlignment="End" />
                             </Grid>
@@ -40,8 +43,8 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <!-- Przycisk na dole -->
-        <Button Grid.Row="2" Margin="0,12,0,0" Text="Dodaj nową grę" Clicked="OnDodajClicked" TextColor="White" />
+        <!-- Przycisk spięty z DodajCommand -->
+        <Button Grid.Row="2" Margin="0,12,0,0" Text="Dodaj nową grę" Command="{Binding DodajCommand}" TextColor="White" />
 
     </Grid>
 </ContentPage>

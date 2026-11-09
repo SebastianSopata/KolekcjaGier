@@ -1,20 +1,13 @@
-using KolekcjaGier.Models;
+using KolekcjaGier.ViewModels;
 
 namespace KolekcjaGier
 {
-    [QueryProperty(nameof(Gra), "WybranaGra")]
     public partial class SzczegolyPage : ContentPage
     {
-        public Gra Gra { set => BindingContext = value; }
-
-        public SzczegolyPage()
+        public SzczegolyPage(SzczegolyViewModel viewModel)
         {
             InitializeComponent();
-        }
-
-        private async void OnWrocClicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("..");
+            BindingContext = viewModel;
         }
     }
 }
