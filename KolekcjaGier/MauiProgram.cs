@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using KolekcjaGier.ViewModels; // <--- TO MUSI BYĆ TUTAJ, NA GÓRZE!
+using KolekcjaGier.ViewModels;
+using KolekcjaGier.Services;
 
 namespace KolekcjaGier;
 
@@ -7,6 +8,9 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
+        SQLitePCL.Batteries_V2.Init(); 
+
+       
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
@@ -22,7 +26,7 @@ public static class MauiProgram
 
         builder.Services.AddTransient<SzczegolyPage>();
         builder.Services.AddTransient<SzczegolyViewModel>();
-
+        builder.Services.AddSingleton<GryBaza>();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

@@ -31,9 +31,11 @@
             <Label Grid.Row="4" Grid.Column="0" Text="Data dodania:" TextColor="#94A3B8" />
             <Label Grid.Row="4" Grid.Column="1" Text="{Binding Gra.DataDodania, StringFormat='{0:d MMMM yyyy}'}" TextColor="White" FontAttributes="Bold" />
         </Grid>
-
-        <!-- Przycisk powrotu spięty z WrocCommand -->
-        <Button Text="Wróć" Command="{Binding WrocCommand}" Margin="0,30,0,0" TextColor="White" />
+        <!-- Przyciski na dole strony szczegółów -->
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,30,0,0">
+            <Button Grid.Column="0" Text="Wróć" Command="{Binding WrocCommand}" TextColor="White" />
+            <Button Grid.Column="1" Text="Usuń" Command="{Binding UsunCommand}" BackgroundColor="#DC2626" TextColor="White" />
+        </Grid>
 
     </VerticalStackLayout>
 </ContentPage>
