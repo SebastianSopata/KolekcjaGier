@@ -27,6 +27,9 @@ public static class MauiProgram
         builder.Services.AddTransient<SzczegolyPage>();
         builder.Services.AddTransient<SzczegolyViewModel>();
         builder.Services.AddSingleton<GryBaza>();
+
+        builder.Services.AddTransient<FormularzPage>();
+        builder.Services.AddTransient<FormularzViewModel>();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

@@ -32,9 +32,10 @@
             <Label Grid.Row="4" Grid.Column="1" Text="{Binding Gra.DataDodania, StringFormat='{0:d MMMM yyyy}'}" TextColor="White" FontAttributes="Bold" />
         </Grid>
         <!-- Przyciski na dole strony szczegółów -->
-        <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,30,0,0">
-            <Button Grid.Column="0" Text="Wróć" Command="{Binding WrocCommand}" TextColor="White" />
-            <Button Grid.Column="1" Text="Usuń" Command="{Binding UsunCommand}" BackgroundColor="#DC2626" TextColor="White" />
+        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10" Margin="0,20,0,0">
+            <Button Grid.Column="0" Text="Wróć" Command="{Binding WrocCommand}" BackgroundColor="#475569" TextColor="White" />
+            <Button Grid.Column="1" Text="Edytuj" Command="{Binding EdytujCommand}" TextColor="White" />
+            <Button Grid.Column="2" Text="Usuń" Command="{Binding UsunCommand}" BackgroundColor="#DC2626" TextColor="White" />
         </Grid>
 
     </VerticalStackLayout>

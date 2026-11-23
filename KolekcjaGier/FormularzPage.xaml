@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:KolekcjaGier.ViewModels"
+             x:Class="KolekcjaGier.FormularzPage"
+             x:DataType="vm:FormularzViewModel"
+             BackgroundColor="{StaticResource TloAplikacji}"
+             Title="{Binding NaglowekStrony}">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+
+        <!-- Nagłówek -->
+        <Label Grid.Row="0" Text="{Binding NaglowekStrony}" FontSize="26" FontAttributes="Bold" TextColor="White" Margin="0,0,0,12" />
+
+        <!-- Przewijane pola formularza -->
+        <ScrollView Grid.Row="1">
+            <Border Style="{StaticResource KartaGry}">
+                <VerticalStackLayout Spacing="12">
+
+                    <!-- 1. Tytuł (Entry) -->
+                    <Label Text="TYTUŁ GRY" FontSize="12" FontAttributes="Bold" TextColor="#94A3B8" />
+                    <Entry Text="{Binding Tytul}" Placeholder="np. Wiedźmin 3" TextColor="White" PlaceholderColor="#64748B" />
+                    <Label Text="{Binding BladTytulu}" TextColor="#F87171" FontSize="12" />
+
+                    <!-- 2. Platforma (Picker) -->
+                    <Label Text="PLATFORMA" FontSize="12" FontAttributes="Bold" TextColor="#94A3B8" />
+                    <Picker ItemsSource="{Binding Platformy}" SelectedItem="{Binding Platforma}" TextColor="White" />
+
+                    <!-- 3. Rok wydania (Entry Numeric) -->
+                    <Label Text="ROK WYDANIA" FontSize="12" FontAttributes="Bold" TextColor="#94A3B8" />
+                    <Entry Text="{Binding RokTekst}" Placeholder="np. 2015" Keyboard="Numeric" TextColor="White" PlaceholderColor="#64748B" />
+                    <Label Text="{Binding BladRoku}" TextColor="#F87171" FontSize="12" />
+
+                    <!-- 4. Ocena (Stepper 1-10) -->
+                    <Label Text="OCENA" FontSize="12" FontAttributes="Bold" TextColor="#94A3B8" />
+                    <HorizontalStackLayout Spacing="16" VerticalOptions="Center">
+                        <Stepper Value="{Binding Ocena}" Minimum="1" Maximum="10" Increment="0.5" />
+                        <Label Text="{Binding Ocena, StringFormat='{0:N1} / 10'}" FontSize="18" FontAttributes="Bold" TextColor="#FBBF24" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <!-- 5. Wersja pudełkowa (Switch) -->
+                    <HorizontalStackLayout Spacing="16" VerticalOptions="Center">
+                        <Label Text="WERSJA PUDEŁKOWA" FontSize="12" FontAttributes="Bold" TextColor="#94A3B8" VerticalOptions="Center" />
+                        <Switch IsToggled="{Binding WersjaPudelkowa}" />
+                    </HorizontalStackLayout>
+
+                    <!-- 6. Data dodania (DatePicker) -->
+                    <Label Text="DATA DODANIA" FontSize="12" FontAttributes="Bold" TextColor="#94A3B8" />
+                    <DatePicker Date="{Binding DataDodania}" Format="d MMMM yyyy" TextColor="White" />
+
+                    <!-- 7. Okładka (Picker) -->
+                    <Label Text="OKŁADKA" FontSize="12" FontAttributes="Bold" TextColor="#94A3B8" />
+                    <Picker ItemsSource="{Binding Zdjecia}" SelectedItem="{Binding Zdjecie}" TextColor="White" />
+
+                </VerticalStackLayout>
+            </Border>
+        </ScrollView>
+
+        <!-- Przyciski na dole -->
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,12,0,0">
+            <Button Grid.Column="0" Text="Anuluj" Command="{Binding AnulujCommand}" BackgroundColor="#475569" TextColor="White" />
+            <Button Grid.Column="1" Text="Zapisz" Command="{Binding ZapiszCommand}" TextColor="White" />
+        </Grid>
+
+    </Grid>
+</ContentPage>

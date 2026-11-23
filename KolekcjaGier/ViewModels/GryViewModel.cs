@@ -34,19 +34,7 @@ namespace KolekcjaGier.ViewModels
         [RelayCommand]
         private async Task Dodaj()
         {
-            var nowa = new Gra
-            {
-                Tytul = "Hades",
-                Platforma = "PC",
-                RokWydania = 2020,
-                WersjaPudelkowa = false,
-                Ocena = 9.5,
-                DataDodania = DateTime.Now,
-                Zdjecie = "dotnet_bot.png"
-            };
-
-            await _baza.ZapiszAsync(nowa);
-            await Wczytaj();
+            await Shell.Current.GoToAsync(nameof(FormularzPage));
         }
 
         [RelayCommand]

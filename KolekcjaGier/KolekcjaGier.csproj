@@ -68,6 +68,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="FormularzPage.xaml.cs">
+	    <DependentUpon>FormularzPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="OAplikacjiPage.xaml.cs">
 	    <DependentUpon>OAplikacjiPage.xaml</DependentUpon>
 	  </Compile>
@@ -77,6 +80,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="FormularzPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="SzczegolyPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

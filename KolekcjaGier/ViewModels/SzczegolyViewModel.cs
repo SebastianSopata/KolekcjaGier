@@ -26,6 +26,13 @@ namespace KolekcjaGier.ViewModels
         }
 
         [RelayCommand]
+        private async Task Edytuj()
+        {
+            if (Gra is null) return;
+            await Shell.Current.GoToAsync(nameof(FormularzPage), new ShellNavigationQueryParameters { ["EdytowanaGra"] = Gra });
+        }
+
+        [RelayCommand]
         private async Task Wroc()
         {
             await Shell.Current.GoToAsync("..");
